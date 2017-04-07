@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  telegram:
+    users:
+      greeting_user: "Hi %{name}!"
