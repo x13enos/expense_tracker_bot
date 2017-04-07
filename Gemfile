@@ -15,10 +15,13 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
+gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'telegram-bot'
 gem 'dotenv-rails'
+gem 'simple_form'
+
 
 
 group :development, :test do

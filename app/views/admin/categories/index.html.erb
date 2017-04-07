@@ -1,0 +1,33 @@
+<div class='clearfix mt-4 mb-4'>
+  <h1 class='float-left d-block'>Categories</h1>
+  <%= link_to 'Add category', new_admin_category_path, :class => "btn btn-lg btn-primary float-right"%>
+</div>
+
+
+<div>
+  <% if @categories.present? %>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Financial type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= category.financial_type.humanize %></td>
+            <td>
+              <%= link_to "Edit", edit_admin_category_path(category), :class => 'btn btn-success btn-xs' %>
+              <%= link_to "Remove", admin_category_path(category), :method => :delete, data: { :confirm => "Are you sure?" }, :class => 'btn btn-danger btn-xs' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <h1>We don't have any of categories. :(</h1>
+  <% end %>
+</div>
