@@ -1,0 +1,9 @@
+<%= simple_form_for [:admin, @category] do |f| %>
+
+    <%= f.input :name, :required => true %>
+    <%= f.input :financial_type, :collection => Category::FINANCIAL_TYPES.map{|t| [t.humanize, t]},  :required => true %>
+    <hr>
+    <%= link_to 'Back', admin_categories_path, :class => "btn btn-default" %>
+    <%= f.submit "Save", :class => "btn btn-success" %>
+
+<% end %>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Expensestrackerbot</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <%= render 'admin/shared/navigation' %>
+    </header>
+    <main role="main">
+    <div class="container">
+
+      <%= render 'admin/shared/messages' %>
+      <%= yield %>
+    </div>
+    </main>
+  </body>
+</html>
