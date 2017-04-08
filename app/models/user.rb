@@ -1,3 +1,5 @@
 class User < ApplicationRecord
-  validates :telegram_id, presence: true
+  has_many :transactions
+
+  validates :telegram_id, presence: true, uniqueness: true
 end

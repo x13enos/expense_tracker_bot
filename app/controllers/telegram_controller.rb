@@ -4,6 +4,11 @@ class TelegramController < Telegram::Bot::UpdatesController
     respond_with :message, text: response
   end
 
+  def message(message)
+    result = TransactionHandleService.new(message, current_user).perform
+    respond_with :message, text: result
+  end
+
   def current_user
     @current_user ||= UserInitService.new(from).perform
   end
