@@ -9,8 +9,8 @@ RSpec.describe TransactionHandleService do
     end
 
     context "when user passed the correct message for creating transaction" do
-      let(:salary_category) { create(:category, name: "Salary", financial_type: 'income')  }
-      let(:expense_category) { create(:category, name: "Food", financial_type: 'expense')  }
+      let(:salary_category) { create(:category, name: "Salary", financial_type: 'income', user_id: user.id)  }
+      let(:expense_category) { create(:category, name: "Food", financial_type: 'expense', user_id: user.id)  }
 
       let(:income_transaction_data) { { "text" => "#{salary_category.name} 4000" } }
       let(:expense_transaction_data) { { "text" => "#{expense_category.name} 4000" } }
@@ -51,7 +51,11 @@ RSpec.describe TransactionHandleService do
 
     context "when user passed the wrong message for creating transaction" do
       let(:user) { create(:user) }
+      let(:user_2) { create(:user) }
+      let(:salary_category) { create(:category, name: "Salary", financial_type: 'income', user_id: user_2.id)  }
+
       let(:data) { { "text" => "Salaly 4000" } }
+      let(:data_for_non_existing_category) { { "text" => "Salary 4000" } }
       let(:service) { TransactionHandleService.new(data, user)  }
 
       it 'should not create transaction for user' do
@@ -59,6 +63,12 @@ RSpec.describe TransactionHandleService do
       end
 
       it 'should return fail status' do
+        allow(I18n).to receive(:t).with("telegram.transactions.transaction_was_not_added") { 'fail' }
+        expect(service.perform).to eq('fail')
+      end
+
+      it 'should return fail status' do
+        service = TransactionHandleService.new(data_for_non_existing_category, user)
         allow(I18n).to receive(:t).with("telegram.transactions.transaction_was_not_added") { 'fail' }
         expect(service.perform).to eq('fail')
       end

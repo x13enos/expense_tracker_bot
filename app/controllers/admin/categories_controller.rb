@@ -43,6 +43,6 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def category_attributes
-    params.require(:category).permit(:name, :financial_type)
+    params.require(:category).permit(:name, :financial_type, :user_id)
   end
 end
