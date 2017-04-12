@@ -7,5 +7,14 @@ RSpec.describe User, type: :model do
 
   context "relations" do
     it { should have_many(:transactions) }
+    it { should have_many(:categories) }
+  end
+
+  describe "#full_name" do
+    let(:user) { build(:user, first_name: 'Ivan', last_name: "Denisov" ) }
+
+    it 'should return full_name of user' do
+      expect(user.full_name).to eq('Ivan Denisov')
+    end
   end
 end

@@ -29,7 +29,7 @@ class TransactionHandleService
   end
 
   def category
-    @category ||= Category.find_by(:name => transaction_data[0])
+    @category ||= user.categories.find_by(:name => transaction_data[0])
   end
 
   def amount
