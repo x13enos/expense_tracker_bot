@@ -25,5 +25,7 @@ en:
     users:
       greeting_user: "Hi %{name}!"
     transactions:
-     transaction_was_added: "Your transaction was successfully added" 
-     transaction_was_not_added: "Sorry, but your message is invalid, check that please and send again." 
+      transaction_was_added: "Your transaction was successfully added" 
+      transaction_was_not_added: "Sorry, but your message is invalid, check that please and send again." 
+    balance:
+      you_have: "Your balance is %{balance}"

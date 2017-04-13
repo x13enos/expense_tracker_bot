@@ -9,6 +9,11 @@ class TelegramController < Telegram::Bot::UpdatesController
     respond_with :message, text: result
   end
 
+  def balance
+    result = BalanceCalculateService.new(current_user).perform
+    respond_with :message, text: result
+  end
+
   def current_user
     @current_user ||= UserInitService.new(from).perform
   end
