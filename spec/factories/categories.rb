@@ -1,13 +1,14 @@
 FactoryGirl.define do
   factory :category do
+    association :user, factory: :user
   end
 
-  factory :income_category do
+  trait :income do
     name "Salary"
     financial_type "income"
   end
 
-  factory :expense_category do
+  trait :expense do
     name "Food"
     financial_type "expense_category"
   end
