@@ -11,4 +11,32 @@ RSpec.describe Category, type: :model do
     it { should have_many(:transactions) }
     it { should belong_to(:user) }
   end
+
+  context "scopes" do
+    before do
+      Category.delete_all
+    end
+
+    describe ".income" do
+      let(:user) { create(:user) }
+      let!(:category_1) { create(:category, :income, :user => user)  }
+      let!(:category_2) { create(:category, :expense, :user => user)  }
+      let!(:category_3) { create(:category, :income, :user => user)  }
+
+      it 'should return only income categories' do
+        expect(Category.income).to eq([category_1, category_3])
+      end
+    end
+
+    describe ".expense" do
+      let(:user) { create(:user) }
+      let!(:category_1) { create(:category, :income, :user => user)  }
+      let!(:category_2) { create(:category, :expense, :user => user)  }
+      let!(:category_3) { create(:category, :expense, :user => user)  }
+
+      it 'should return only expense categories' do
+        expect(Category.expense).to eq([category_2, category_3])
+      end
+    end
+  end
 end
