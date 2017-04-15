@@ -30,4 +30,9 @@ en:
       transaction_was_not_added: "Sorry, but your message is invalid, check that please and send again." 
     balance:
       you_have: "Your balance is %{balance}"
+    categories:
+      income: "*Incomes:*"
+      expense: "*Expenses:*"
+      you_do_not_have_categories: "Unfortunately, you don't have any of transactions categories. You should add at least one for creating transactions."
+
 

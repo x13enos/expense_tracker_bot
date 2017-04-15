@@ -19,6 +19,11 @@ class TelegramController < Telegram::Bot::UpdatesController
     respond_with :message, text: response
   end
 
+  def categories
+    categories_list = CategoriesListService.new(current_user).perform
+    respond_with :message, text: categories_list, parse_mode: "Markdown"
+  end
+
   def current_user
     @current_user ||= UserInitService.new(from).perform
   end
