@@ -14,6 +14,11 @@ class TelegramController < Telegram::Bot::UpdatesController
     respond_with :message, text: result
   end
 
+  def help
+    response = I18n.t('telegram.help')
+    respond_with :message, text: response
+  end
+
   def current_user
     @current_user ||= UserInitService.new(from).perform
   end
