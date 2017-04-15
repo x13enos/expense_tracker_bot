@@ -10,7 +10,7 @@ RSpec.describe TransactionHandleService do
 
     context "when user passed the correct message for creating transaction" do
       let(:salary_category) { create(:category, name: "Salary", financial_type: 'income', user_id: user.id)  }
-      let(:expense_category) { create(:category, name: "Food", financial_type: 'expense', user_id: user.id)  }
+      let(:expense_category) { create(:category, name: "Eating out", financial_type: 'expense', user_id: user.id)  }
 
       let(:income_transaction_data) { { "text" => "#{salary_category.name} 4000" } }
       let(:expense_transaction_data) { { "text" => "#{expense_category.name} 4000" } }

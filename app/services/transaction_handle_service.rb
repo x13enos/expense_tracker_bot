@@ -1,8 +1,9 @@
 class TransactionHandleService
+  TRANSACTION_MESSAGE_REGEXP = /\A(.+)\s(-?\d+)/
   attr_accessor :transaction_data, :user
 
   def initialize(data, user)
-    self.transaction_data = data["text"].split(' ')
+    self.transaction_data = data["text"].match(TRANSACTION_MESSAGE_REGEXP)
     self.user = user
   end
 
@@ -29,12 +30,12 @@ class TransactionHandleService
   end
 
   def category
-    @category ||= user.categories.find_by(:name => transaction_data[0])
+    @category ||= user.categories.find_by(:name => transaction_data[1])
   end
 
   def amount
     begin
-      transaction_data[1].to_f.abs
+      transaction_data[2].to_f.abs
     rescue
       nil
     end
