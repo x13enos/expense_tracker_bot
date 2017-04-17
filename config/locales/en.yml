@@ -34,5 +34,16 @@ en:
       income: "*Incomes:*"
       expense: "*Expenses:*"
       you_do_not_have_categories: "Unfortunately, you don't have any of transactions categories. You should add at least one for creating transactions."
+      types:
+        - Income
+        - Expense
+      new:
+        please_check_category_name: "Sorry, but we coudn't created a category.\n%{error}."
+        blank_name: "You didn't fill the name. Please add that and send again."
+        existing_name_of_category: "You already have category with that name. Please, select another."
+        was_added: "Category was added!"
+        fill_the_name: "Please, fill the name of category."
+        wrong_type: "You've selected the wrong type."
+        what_type: 'What type it should have?'
 
 

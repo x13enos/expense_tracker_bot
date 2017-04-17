@@ -12,24 +12,24 @@ RSpec.describe CategoriesListService do
     context "user has the categories" do
       let(:income_category) { create(:category, :income, user: user, name: "Salary")  }
       let(:expense_category) { create(:category, :expense, user: user, name: "Food")  }
-      let(:expense_category_2) { create(:category, :expense, user: user, name: "Food")  }
+      let(:expense_category_2) { create(:category, :expense, user: user, name: "Food1")  }
 
       it 'should return list of categories that separated on income and expense sections'  do
         income_category
         expense_category
         expense_category_2
-        expect(service.perform).to eq("Incomes:\nSalary\n\nExpenses:\nFood\nFood")
+        expect(service.perform).to eq("*Incomes:*\nSalary\n\n*Expenses:*\nFood\nFood1")
       end
 
       it 'should return list of categories only with "income" financial type'  do
         income_category
-        expect(service.perform).to eq("Incomes:\nSalary")
+        expect(service.perform).to eq("*Incomes:*\nSalary")
       end
 
       it 'should return list of categories only with "expense" financial type'  do
         expense_category
         expense_category_2
-        expect(service.perform).to eq("Expenses:\nFood\nFood")
+        expect(service.perform).to eq("*Expenses:*\nFood\nFood1")
       end
     end
 
