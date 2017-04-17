@@ -5,6 +5,7 @@ class Category < ApplicationRecord
   has_many :transactions
 
   validates :name, :user, presence: true
+  validates :name, uniqueness: { scope: :user_id }
   validates :financial_type, :inclusion => FINANCIAL_TYPES
 
   scope :income, -> { where(financial_type: "income") }
