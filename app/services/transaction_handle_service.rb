@@ -1,5 +1,5 @@
 class TransactionHandleService
-  TRANSACTION_MESSAGE_REGEXP = /\A(.+)\s(-?\d+)/
+  TRANSACTION_MESSAGE_REGEXP = /\A([^\d+]*)\s(-?\d+)\s?(.+)?/
   attr_accessor :transaction_data, :user
 
   def initialize(data, user)
@@ -25,7 +25,8 @@ class TransactionHandleService
   def transaction_params
     {
       :category_id => category.try(:id),
-      :amount => calculate_amount
+      :amount => calculate_amount,
+      :description => description
     }
   end
 
@@ -45,6 +46,10 @@ class TransactionHandleService
     if category && amount
       category.financial_type == 'income' ? amount : -amount
     end
+  end
+
+  def description
+    transaction_data[3]
   end
 
   def success_message
