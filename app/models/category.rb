@@ -6,6 +6,7 @@ class Category < ApplicationRecord
 
   validates :name, :user, presence: true
   validates :name, uniqueness: { scope: :user_id }
+  validates :name, exclusion: { in: I18n.t('telegram.categories.types') }
   validates :financial_type, :inclusion => FINANCIAL_TYPES
 
   scope :income, -> { where(financial_type: "income") }

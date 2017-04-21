@@ -22,7 +22,8 @@
 en:
   hello: "Hello world"
   telegram:
-    help: "It's a short reference can help you with that bot.\n\nFor adding new transaction, you should use next format: 'Category amount description'.\n*Category* and *amount* are required attributes. So if you decide to add your spending for a house, your transaction will look like : 'House 145' or 'House 145 roof repair'\n\nBefore creating transaction you need add category via website.\n\nOur bot supports next commands:\n/help - for getting this reference\n/balance - will return your balance\n/categories - you'll get the list of the categories separated on 'Expenses' and 'Incomes' types"
+    help: "It's a short reference can help you with that bot.\n\nFor adding new transaction, you should use next format: 'Category amount description'.\n*Category* and *amount* are required attributes. So if you decide to add your spending for a house, your transaction will look like : 'House 145' or 'House 145 roof repair'\n\nBefore creating transaction you need add category via website.\n\nOur bot supports next commands:\n/help - for getting this reference\n/balance - will return your balance\n/categories - you'll get the list of the categories separated on 'Expenses' and 'Incomes' types\n/newcategory - that command gives you the ability for creating new category\n/deletecategory {name} - allows you to remove one of your categories"
+    yes_word: 'yes'
     users:
       greeting_user: "Hi %{name}!"
     transactions:
@@ -45,5 +46,11 @@ en:
         fill_the_name: "Please, fill the name of category."
         wrong_type: "You've selected the wrong type."
         what_type: 'What type it should have?'
+        reserved_name: "'Expense' and 'Income' are reserved words, please select another name."
+      delete:
+        not_found: "Unfortunately we didn't find the category with that name."
+        type_in_yes: "Type in 'yes' if you really want to delete that category."
+        success: "Category was deleted!"
+        cancel: "The deleting of category was cancelled."
 
 
