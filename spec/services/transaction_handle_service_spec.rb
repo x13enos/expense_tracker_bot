@@ -18,7 +18,7 @@ RSpec.describe TransactionHandleService do
       let(:service_with_income_data) { TransactionHandleService.new(income_transaction_data, user)  }
       let(:service_with_expense_data) { TransactionHandleService.new(expense_transaction_data, user)  }
 
-      it 'should create transaction for user', :focus do
+      it 'should create transaction for user' do
         expect{ service_with_income_data.perform }.to change(user.transactions, :count).from(0).to(1)
       end
 

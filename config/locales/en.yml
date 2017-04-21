@@ -46,6 +46,7 @@ en:
         fill_the_name: "Please, fill the name of category."
         wrong_type: "You've selected the wrong type."
         what_type: 'What type it should have?'
+        reserved_name: "'Expense' and 'Income' are reserved words, please select another name."
       delete:
         not_found: "Unfortunately we didn't find the category with that name."
         type_in_yes: "Type in 'yes' if you really want to delete that category."
