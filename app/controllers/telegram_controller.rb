@@ -26,6 +26,7 @@ class TelegramController < Telegram::Bot::UpdatesController
     respond_with :message, text: categories_list, parse_mode: "Markdown"
   end
 
+  #New category chain
   def newcategory(*)
     save_context(:new_category_type)
     respond_with :message, text: t('telegram.categories.new.what_type'), reply_markup: {
@@ -45,6 +46,22 @@ class TelegramController < Telegram::Bot::UpdatesController
     save_context(:new_category_name) if result[:status] == :error
     respond_with :message, text: result[:message]
   end
+
+  #Delete category chain
+  def deletecategory(*category_name)
+    if category = current_user.categories.find_by(name: category_name.join(" "))
+      save_context(:delete_category_confirmation)
+      user_session[:delete_category_id] = category.id
+    end
+    respond_with :message, text: t("telegram.categories.delete.#{category.present? ? 'type_in_yes' : 'not_found'}")
+  end
+
+  context_handler :delete_category_confirmation do |*confirmation_message|
+    positive_response = confirmation_message[0] == t('telegram.yes_word')
+    current_user.categories.find(user_session[:delete_category_id]).delete if positive_response
+    respond_with :message, text: t("telegram.categories.delete.#{positive_response ? 'success' : 'cancel'}")
+  end
+
 
   private
 
