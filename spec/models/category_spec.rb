@@ -6,6 +6,7 @@ RSpec.describe Category, type: :model do
     it { should validate_presence_of(:user) }
     it { should validate_inclusion_of(:financial_type).in_array(Category::FINANCIAL_TYPES) }
     it { should validate_uniqueness_of(:name).scoped_to(:user_id) }
+    it { should validate_exclusion_of(:name).in_array(I18n.t('telegram.categories.types')) }
   end
 
   context "relations" do

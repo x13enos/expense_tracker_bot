@@ -42,6 +42,13 @@ RSpec.describe CategoryCreateService do
         create(:category, :income, user: user, name: 'Food')
         expect(service.perform).to eq(fail_result)
       end
+
+      it 'should return error if user tried to use the reserved category name' do
+        service = CategoryCreateService.new(user, ['Expense'], financial_type)
+        allow(I18n).to receive(:t).with("telegram.categories.new.please_check_category_name", {:error=>"reserved"}) { 'recheck' }
+        allow(I18n).to receive(:t).with("telegram.categories.new.reserved_name") { 'reserved' }
+        expect(service.perform).to eq(fail_result)
+      end
     end
 
     context "when user didn't fill the name" do

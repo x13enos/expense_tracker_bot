@@ -8,8 +8,8 @@ class CategoryCreateService
   end
 
   def perform
-    category = user.categories.new(category_params)
-    category.save ? success_result : fail_result
+    @category = user.categories.new(category_params)
+    @category.save ? success_result : fail_result
   end
 
   private
@@ -38,9 +38,15 @@ class CategoryCreateService
   def get_error_message
     if category_name.blank?
       I18n.t("telegram.categories.new.blank_name")
+    elsif category_name_is_reserved?
+      I18n.t("telegram.categories.new.reserved_name")
     else
       I18n.t("telegram.categories.new.existing_name_of_category")
     end
+  end
+
+  def category_name_is_reserved?
+    @category.errors.messages[:name].include?('is reserved')
   end
 
   def parse_category_name(name)
