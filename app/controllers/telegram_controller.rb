@@ -18,7 +18,8 @@ class TelegramController < Telegram::Bot::UpdatesController
 
   def help(*)
     response = t('telegram.help')
-    respond_with :message, text: response
+    respond_with :message, text: response, parse_mode: "Markdown"
+
   end
 
   def categories(*)

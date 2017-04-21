@@ -27,10 +27,16 @@ RSpec.describe TransactionHandleService do
         expect(user.transactions.last.amount).to eq(4000.to_f)
       end
 
-      it 'should create transaction with positive amount if user pass negative amount' do
+      it 'should create transaction with positive amount if user passed negative amount' do
         data ={ "text" => "#{salary_category.name} -4000" }
         TransactionHandleService.new(data, user).perform
         expect(user.transactions.last.amount).to eq(4000.to_f)
+      end
+
+      it 'should create transaction with desciption if user passed additional info' do
+        data ={ "text" => "#{salary_category.name} -4000 Buy 3 apple" }
+        TransactionHandleService.new(data, user).perform
+        expect(user.transactions.last.description).to eq("Buy 3 apple")
       end
 
       it 'should create transaction with category_id' do
