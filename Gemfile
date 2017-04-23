@@ -41,6 +41,7 @@ group :test do
   gem 'factory_girl_rails' 
   gem 'faker'
   gem 'fuubar'
+  gem 'timecop'
 end
 
 group :production do

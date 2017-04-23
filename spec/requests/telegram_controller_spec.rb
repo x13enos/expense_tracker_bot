@@ -4,6 +4,26 @@ RSpec.describe TelegramController, :telegram_bot do
     allow_any_instance_of(UserInitService).to receive(:perform) { user }
   end
 
+  describe '#report' do
+    it 'should build report generator' do
+      expect(ReportGenerateService).to receive(:new).with(user) { double(:perform => true) }
+      dispatch_command :report
+    end
+
+    it 'should execute report generator' do
+      generator = double
+      allow(ReportGenerateService).to receive(:new) { generator }
+      expect(generator).to receive(:perform)
+      dispatch_command :report
+    end
+
+    it 'should return the result of report generator' do
+      generator = double(:perform => "respond")
+      allow(ReportGenerateService).to receive(:new) { generator }
+      expect { dispatch_command :report }.to respond_with_message("respond")
+    end
+  end
+
   describe '#deletecategory' do
     context "user passed the name of existing category" do
       let(:category) { create(:category,:income, user: user) }

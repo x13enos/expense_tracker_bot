@@ -4,4 +4,6 @@ class Transaction < ApplicationRecord
 
   validates :user_id, :category_id, :amount, :presence => true
   validates :amount, numericality: true
+
+  scope :current_month, -> { where("transactions.created_at BETWEEN ? AND ?", Time.now.beginning_of_month, Time.now) }
 end
