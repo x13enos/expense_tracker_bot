@@ -16,12 +16,15 @@ class ReportGenerateService
   private
 
   def build_transactions_list
-    groupped_list = transactions.group_by{ |t| parse_date(t.created_at) }
-    groupped_list.map{|date, transactions| date_with_transactions(date, transactions)}.join("\n\n")
+    [group_by_month, group_by_day].join("\n\n")
   end
 
-  def date_with_transactions(date, transactions)
-    ([date] + transactions.map{|t| transaction_output(t) }).join("\n")
+  def group_by_month
+    [I18n.t("telegram.reports.group_by_month"), amounts_gropped_by_month.map{|c, a| category_amount(c, a)}].join("\n")
+  end
+
+  def group_by_day
+    [I18n.t("telegram.reports.group_by_day"), amounts_gropped_by_day.map{|c, a| category_and_day_amount(c, a)}].join("\n")
   end
 
   def parse_date(date)
@@ -29,10 +32,26 @@ class ReportGenerateService
   end
 
   def transactions
-    @transactions ||= user.transactions.joins(:category).current_month.order("created_at DESC")
+    @transactions ||= user.transactions.joins(:category).current_month
   end
 
-  def transaction_output(transaction)
-    "#{ transaction.description || transaction.category.name }:  #{transaction.amount}"
+  def amounts_gropped_by_month
+    transactions.group("categories.name").sum(:amount)
+  end
+
+  def category_amount(category_name, amount)
+    "#{category_name}: #{amount}"
+  end
+
+  def amounts_gropped_by_day
+    transactions.group("categories.name").group('transactions.created_at::date').sum(:amount)
+  end
+
+  def category_and_day_amount(category_and_date, amount)
+    category_name, date = category_and_date
+    category_output = category_amount(category_name, amount)
+    the_same_date = @last_date == date
+    @last_date = date
+    the_same_date ? category_output : [parse_date(date), category_output].join("\n")
   end
 end
