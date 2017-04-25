@@ -4,23 +4,23 @@ RSpec.describe TelegramController, :telegram_bot do
     allow_any_instance_of(UserInitService).to receive(:perform) { user }
   end
 
-  describe '#report' do
-    it 'should build report generator' do
-      expect(ReportGenerateService).to receive(:new).with(user) { double(:perform => true) }
-      dispatch_command :report
+  describe '#transactions' do
+    it 'should build transactions list service' do
+      expect(TransactionsListService).to receive(:new).with(user) { double(:perform => true) }
+      dispatch_command :transactions
     end
 
-    it 'should execute report generator' do
+    it 'should execute the transactions list service' do
       generator = double
-      allow(ReportGenerateService).to receive(:new) { generator }
+      allow(TransactionsListService).to receive(:new) { generator }
       expect(generator).to receive(:perform)
-      dispatch_command :report
+      dispatch_command :transactions
     end
 
-    it 'should return the result of report generator' do
+    it 'should return the list of transactions' do
       generator = double(:perform => "respond")
-      allow(ReportGenerateService).to receive(:new) { generator }
-      expect { dispatch_command :report }.to respond_with_message("respond")
+      allow(TransactionsListService).to receive(:new) { generator }
+      expect { dispatch_command :transactions }.to respond_with_message("respond")
     end
   end
 

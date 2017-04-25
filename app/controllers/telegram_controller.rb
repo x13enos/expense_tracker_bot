@@ -32,6 +32,11 @@ class TelegramController < Telegram::Bot::UpdatesController
     respond_with :message, text: report, parse_mode: "Markdown"
   end
 
+  def transactions(*)
+    list = TransactionsListService.new(current_user).perform
+    respond_with :message, text: list, parse_mode: "Markdown"
+  end
+
   #New category chain
   def newcategory(*)
     save_context(:new_category_type)
