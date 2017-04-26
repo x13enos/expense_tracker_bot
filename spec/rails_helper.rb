@@ -6,6 +6,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'support/factory_girl'
+require 'active_support/testing/time_helpers'
 require 'spec_helper'
 require 'telegram/bot/rspec/integration'
 
@@ -58,6 +59,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include ActiveSupport::Testing::TimeHelpers
+
   config.after { Telegram.bot.reset }
 end
 
