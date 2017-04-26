@@ -12,6 +12,6 @@ class BalanceCalculateService
   private
 
   def balance
-    user.transactions.sum(:amount).to_i
+    user.transactions.sum(:amount)
   end
 end
