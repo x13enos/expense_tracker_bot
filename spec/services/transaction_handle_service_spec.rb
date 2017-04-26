@@ -39,6 +39,11 @@ RSpec.describe TransactionHandleService do
         expect(user.transactions.last.description).to eq("Buy 3 apple")
       end
 
+      it 'should create transaction if user passed the category name in other case' do
+        data ={ "text" => "#{salary_category.name.downcase} -4000 Buy 3 apple" }
+        expect {TransactionHandleService.new(data, user).perform }.to change(Transaction, :count).from(0).to(1)
+      end
+
       it 'should create transaction with category_id' do
         service_with_income_data.perform
         expect(user.transactions.last.category_id).to eq(salary_category.id)
@@ -47,6 +52,12 @@ RSpec.describe TransactionHandleService do
       it 'should create transaction with negative amount' do
         service_with_expense_data.perform
         expect(user.transactions.last.amount).to eq(-4000.to_f)
+      end
+
+      it 'should create transaction with float amount' do
+        data ={ "text" => "#{salary_category.name} -100.34 Buy 3 apple" }
+        TransactionHandleService.new(data, user).perform
+        expect(user.transactions.last.amount).to eq(100.34)
       end
 
       it 'should return success status' do

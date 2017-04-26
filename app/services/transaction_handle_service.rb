@@ -1,5 +1,5 @@
 class TransactionHandleService
-  TRANSACTION_MESSAGE_REGEXP = /\A([^\d+]*)\s(-?\d+)\s?(.+)?/
+  TRANSACTION_MESSAGE_REGEXP = /\A([^\d+]*)\s(-?\d+\.?\d+)\s?(.+)?/
   attr_accessor :transaction_data, :user
 
   def initialize(data, user)
@@ -31,7 +31,11 @@ class TransactionHandleService
   end
 
   def category
-    @category ||= user.categories.find_by(:name => transaction_data[1])
+    @category ||= user.categories.where('lower(name) = ?', category_name).first
+  end
+
+  def category_name
+    transaction_data[1].downcase
   end
 
   def amount

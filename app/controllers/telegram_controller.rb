@@ -68,7 +68,7 @@ class TelegramController < Telegram::Bot::UpdatesController
   end
 
   context_handler :delete_category_confirmation do |*confirmation_message|
-    positive_response = confirmation_message[0] == t('telegram.yes_word')
+    positive_response = confirmation_message[0].downcase == t('telegram.yes_word')
     current_user.categories.find(user_session[:delete_category_id]).delete if positive_response
     respond_with :message, text: t("telegram.categories.delete.#{positive_response ? 'success' : 'cancel'}")
   end
