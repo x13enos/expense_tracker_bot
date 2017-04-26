@@ -29,7 +29,7 @@ class TransactionsListService
   end
 
   def transactions
-    @transactions ||= user.transactions.joins(:category).current_month.order("created_at DESC")
+    @transactions ||= user.transactions.joins(:category).current_month.order("created_at DESC").limit(20)
   end
 
   def transaction_output(transaction)
