@@ -54,6 +54,12 @@ RSpec.describe TransactionHandleService do
         expect(user.transactions.last.amount).to eq(-4000.to_f)
       end
 
+      it 'should create transaction with float amount' do
+        data ={ "text" => "#{salary_category.name} -100.34 Buy 3 apple" }
+        TransactionHandleService.new(data, user).perform
+        expect(user.transactions.last.amount).to eq(100.34)
+      end
+
       it 'should return success status' do
         allow(I18n).to receive(:t).with("telegram.transactions.transaction_was_added") { 'success' }
         expect(service_with_income_data.perform).to eq('success')

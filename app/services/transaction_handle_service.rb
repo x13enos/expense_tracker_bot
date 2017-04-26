@@ -1,5 +1,5 @@
 class TransactionHandleService
-  TRANSACTION_MESSAGE_REGEXP = /\A([^\d+]*)\s(-?\d+)\s?(.+)?/
+  TRANSACTION_MESSAGE_REGEXP = /\A([^\d+]*)\s(-?\d+\.?\d+)\s?(.+)?/
   attr_accessor :transaction_data, :user
 
   def initialize(data, user)
