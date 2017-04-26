@@ -20,13 +20,13 @@ RSpec.describe Transaction, type: :model do
       let(:transaction3) { create(:transaction) }
 
       it 'should return only transactions which were created in current month' do
-        time = Time.now
+        time = Time.current
         transaction1
-        Timecop.travel(time.beginning_of_month + 1.hours)
+        travel_to time.beginning_of_month + 1.hours
         transaction3
-        Timecop.travel(time - 1.months)
+        travel_to time - 1.months
         transaction2
-        Timecop.return
+        travel_back
         expect(Transaction.current_month).to eq([transaction1, transaction3])
       end
     end

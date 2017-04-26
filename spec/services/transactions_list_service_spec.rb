@@ -10,17 +10,17 @@ RSpec.describe TransactionsListService do
       let(:transaction) { create(:transaction, user: user, category: category, amount: 100) }
       let(:transaction1) { create(:transaction, user: user, category: category1, amount: 130) }
       let(:transaction2) { create(:transaction, user: user, category: category1, description: 'Burgers', amount: 30) }
-      let(:response) { "*Sat, 15 April 2017*\nBurgers:  30.0\nFood:  130.0\n\n*Mon, 10 April 2017*\nSalary:  100.0" }
+      let(:response) { "*Sat, 15 April 2017*\nFood:  130.0\nBurgers:  30.0\n\n*Mon, 10 April 2017*\nSalary:  100.0" }
 
       it 'should build the report' do
         t = Time.local(2017, 4, 10, 10, 5, 0)
-        Timecop.travel(t)
+        travel_to t
         transaction
-        Timecop.travel(t + 5.days)
+        travel_to t + 5.days
         transaction1
         transaction2
         expect(TransactionsListService.new(user).perform).to eq(response)
-        Timecop.return
+        travel_back
       end
     end
 

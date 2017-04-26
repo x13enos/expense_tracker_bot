@@ -14,13 +14,13 @@ RSpec.describe ReportGenerateService do
 
       it 'should build the report' do
         t = Time.local(2017, 4, 10, 10, 5, 0)
-        Timecop.travel(t)
+        travel_to t
         transaction
-        Timecop.travel(t + 5.days)
+        travel 5.day
         transaction1
         transaction2
         expect(ReportGenerateService.new(user).perform).to eq(response)
-        Timecop.return
+        travel_back
       end
     end
 
