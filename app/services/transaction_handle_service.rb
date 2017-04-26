@@ -31,7 +31,11 @@ class TransactionHandleService
   end
 
   def category
-    @category ||= user.categories.find_by(:name => transaction_data[1])
+    @category ||= user.categories.where('lower(name) = ?', category_name).first
+  end
+
+  def category_name
+    transaction_data[1].downcase
   end
 
   def amount

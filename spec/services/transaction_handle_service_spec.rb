@@ -39,6 +39,11 @@ RSpec.describe TransactionHandleService do
         expect(user.transactions.last.description).to eq("Buy 3 apple")
       end
 
+      it 'should create transaction if user passed the category name in other case' do
+        data ={ "text" => "#{salary_category.name.downcase} -4000 Buy 3 apple" }
+        expect {TransactionHandleService.new(data, user).perform }.to change(Transaction, :count).from(0).to(1)
+      end
+
       it 'should create transaction with category_id' do
         service_with_income_data.perform
         expect(user.transactions.last.category_id).to eq(salary_category.id)
