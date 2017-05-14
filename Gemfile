@@ -21,7 +21,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'telegram-bot'
 gem 'dotenv-rails'
 gem 'simple_form'
-
+gem 'jwt'
 
 
 group :development, :test do

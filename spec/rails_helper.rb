@@ -9,6 +9,7 @@ require 'support/factory_girl'
 require 'active_support/testing/time_helpers'
 require 'spec_helper'
 require 'telegram/bot/rspec/integration'
+require 'jwt'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
