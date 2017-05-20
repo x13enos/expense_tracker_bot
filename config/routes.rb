@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   end
 
   resources :updates, only: :create
+  resources :dashboard, only: :index
   telegram_webhooks TelegramController
 end
