@@ -10,7 +10,7 @@ RSpec.describe ReportGenerateService do
       let(:transaction) { create(:transaction, user: user, category: category, amount: 100) }
       let(:transaction1) { create(:transaction, user: user, category: category1, amount: 130) }
       let(:transaction2) { create(:transaction, user: user, category: category1, description: 'Burgers', amount: 30) }
-      let(:response) { "*Group by month*\n\nFood: 160.0\nSalary: 100.0\n\n*Group by day*\n\n*Sat, 15 April 2017*\nFood: 160.0\n*Mon, 10 April 2017*\nSalary: 100.0" }
+      let(:response) { "*Group by month*\n\nFood: 160.0\nSalary: 100.0\n\n*Group by day*\n\n*Mon, 10 April 2017*\nSalary: 100.0\n*Sat, 15 April 2017*\nFood: 160.0" }
 
       it 'should build the report' do
         t = Time.local(2017, 4, 10, 10, 5, 0)
