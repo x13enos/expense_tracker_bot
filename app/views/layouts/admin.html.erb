@@ -9,15 +9,13 @@
   </head>
 
   <body>
-    <header>
+    <div id='wrapper'>
       <%= render 'admin/shared/navigation' %>
-    </header>
-    <main role="main">
-    <div class="container">
 
       <%= render 'admin/shared/messages' %>
-      <%= yield %>
+      <div id='page-wrapper'>
+        <%= yield %>
+      </div>
     </div>
-    </main>
   </body>
 </html>
