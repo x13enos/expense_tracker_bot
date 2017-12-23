@@ -1,5 +1,6 @@
 require 'jwt'
 class AuthService
+  TOKEN_LIFETIME = 15
 
   class << self
     def encode(data)
@@ -22,7 +23,7 @@ class AuthService
     end
 
     def expiration_time
-      Time.now.to_i + 15 * 60
+      Time.now.to_i + (TOKEN_LIFETIME * 60)
     end
   end
 
