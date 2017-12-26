@@ -7,25 +7,25 @@ RSpec.describe AuthService do
 
   describe ".encode" do
     it 'should encode data with expiration time' do
-      travel_to travel_time
-      token = AuthService.encode(data)
-      expect(token).to eq(encoded_data)
-      travel_back
+      travel_to travel_time do
+        token = AuthService.encode(data)
+        expect(token).to eq(encoded_data)
+      end
     end
   end
 
   describe ".decode" do
     it 'should decode and return data if token was not expire' do
-      travel_to travel_time
-      decoded_data = AuthService.decode(encoded_data)
-      expect(decoded_data).to eq(data)
-      travel_back
+      travel_to travel_time do
+        decoded_data = AuthService.decode(encoded_data)
+        expect(decoded_data).to eq(data)
+      end
     end
 
     it 'should raise exception if token was expired' do
-      travel_to travel_time + 16.minute
-      expect { AuthService.decode(encoded_data) }.to raise_error(JWT::ExpiredSignature)
-      travel_back
+      travel_to travel_time + 16.minutes do
+        expect { AuthService.decode(encoded_data) }.to raise_error(JWT::ExpiredSignature)
+      end
     end
   end
 end
