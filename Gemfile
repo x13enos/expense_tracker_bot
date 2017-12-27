@@ -20,12 +20,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'telegram-bot'
 gem 'dotenv-rails'
 gem 'simple_form'
+gem 'jwt'
 
 #UI
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem "font-awesome-rails"
-
-
 
 group :development, :test do
   gem 'byebug', platform: :mri
