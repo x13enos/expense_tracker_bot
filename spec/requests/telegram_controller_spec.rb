@@ -74,4 +74,18 @@ RSpec.describe TelegramController, :telegram_bot do
       end
     end
   end
+
+  describe "#website" do
+    let(:resulting_link) { "[Your link](http://example.com/?token=token)"  }
+
+    it 'call service of generating link' do
+      expect(WebsiteLinkGenerateService).to receive(:perform).with(user.id) { resulting_link }
+      dispatch_command :website
+    end
+
+    it 'should return link as a text' do
+      expect(WebsiteLinkGenerateService).to receive(:perform).with(user.id) { resulting_link }
+      expect { dispatch_command :website}.to respond_with_message(resulting_link)
+    end
+  end
 end

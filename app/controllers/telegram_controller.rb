@@ -19,7 +19,6 @@ class TelegramController < Telegram::Bot::UpdatesController
   def help(*)
     response = t('telegram.help')
     respond_with :message, text: response, parse_mode: "Markdown"
-
   end
 
   def categories(*)
@@ -35,6 +34,11 @@ class TelegramController < Telegram::Bot::UpdatesController
   def transactions(*)
     list = TransactionsListService.new(current_user).perform
     respond_with :message, text: list, parse_mode: "Markdown"
+  end
+
+  def website(*)
+    link = WebsiteLinkGenerateService.perform(current_user.id)
+    respond_with :message, text: link, parse_mode: "Markdown"
   end
 
   #New category chain

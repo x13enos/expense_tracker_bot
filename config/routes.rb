@@ -4,5 +4,9 @@ Rails.application.routes.draw do
   end
 
   resources :updates, only: :create
+  resources :dashboard, only: :index
+
+  root to: 'dashboard#index'
+  get "authorize", to: "sessions#index"
   telegram_webhooks TelegramController
 end
