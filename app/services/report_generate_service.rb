@@ -44,7 +44,7 @@ class ReportGenerateService
   end
 
   def amounts_gropped_by_day
-    transactions.group('transactions.created_at::date').group('categories.name').order("transactions_created_at_date DESC").sum(:amount)
+    transactions.group('transactions.created_at::date').group('categories.name').order("transactions_created_at_date ASC").sum(:amount)
   end
 
   def category_and_day_amount(category_and_date, amount)
