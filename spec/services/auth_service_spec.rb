@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AuthService do
   let(:travel_time) { Time.local(2017, 4, 10, 10, 5, 0) }
   let(:data) { 'secret_data' }
-  let(:encoded_data) { 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoic2VjcmV0X2RhdGEiLCJleHAiOjE0OTE4MDg4MDB9.6Nppq9c5raJ1td-CwjTWi2F0ZnRWowiZpKZkzgo1_DI' }
+  let(:encoded_data) { 'eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoic2VjcmV0X2RhdGEiLCJleHAiOiIxNDkxODA4ODAwIn0.nbrYyNVRx5IwjtbgjgZ_8fb6EkurgAcDo2-R5mSxrjs' }
 
   describe ".encode" do
     it 'should encode data with expiration time' do

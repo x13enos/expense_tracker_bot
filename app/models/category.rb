@@ -11,4 +11,8 @@ class Category < ApplicationRecord
 
   scope :income, -> { where(financial_type: "income") }
   scope :expense, -> { where(financial_type: "expense") }
+
+  def expense?
+    financial_type == "expense"
+  end
 end

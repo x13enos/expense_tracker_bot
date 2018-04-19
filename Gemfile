@@ -16,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder'
 gem 'telegram-bot'
 gem 'dotenv-rails'
 gem 'simple_form'
@@ -24,7 +24,7 @@ gem 'jwt'
 gem 'webpacker', '~> 3.4'
 
 #UI
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '~> 4.0.0.beta3'
 gem "font-awesome-rails"
 
 group :development, :test do
@@ -44,6 +44,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'fuubar'
+  gem 'rails-controller-testing'
 end
 
 group :production do
