@@ -21,6 +21,7 @@ gem 'telegram-bot'
 gem 'dotenv-rails'
 gem 'simple_form'
 gem 'jwt'
+gem 'webpacker', '~> 3.4'
 
 #UI
 gem 'bootstrap', '~> 4.0.0.beta2.1'
