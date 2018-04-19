@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 
-gem 'rails', '~> 5.0.2'
+gem 'rails', '~> 5.1.0'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
@@ -40,7 +40,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'factory_girl_rails' 
+  gem 'factory_girl_rails'
   gem 'faker'
   gem 'fuubar'
 end
