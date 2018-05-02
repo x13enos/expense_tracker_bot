@@ -1,6 +1,6 @@
 import { createLocalVue, shallow } from '@vue/test-utils'
 import VueResource from 'vue-resource'
-import dashboard from '../../packs/components/dashboard.vue';
+import dashboard from '@components/dashboard.vue';
 
 const localVue = createLocalVue()
 localVue.use(VueResource)
@@ -31,6 +31,7 @@ describe('dashboard.vue', () => {
       var spy = sinon.spy(localVue.http, "get");
       shallow(dashboard, { localVue });
       expect(spy.withArgs('dashboard').calledOnce).to.be.true
+      localVue.http.get.restore()
     })
 
     it('should update user_data after getting dashboard info', (done) => {
