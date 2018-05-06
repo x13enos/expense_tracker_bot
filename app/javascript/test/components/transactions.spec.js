@@ -36,11 +36,11 @@ describe('transactions.vue', () => {
       localVue.http.get.restore()
     })
 
-    it('should update transaction_data after getting transactions info', (done) => {
+    it('should update transactionData after getting transactions info', (done) => {
       var wrapper = shallow(transactions, { localVue });
 
       setTimeout(() => {
-        expect(wrapper.vm.transaction_data.id).to.eq("12")
+        expect(wrapper.vm.transactionData.id).to.eq("12")
         done()
       }, 0)
 

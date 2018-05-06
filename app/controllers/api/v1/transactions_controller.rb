@@ -1,7 +1,7 @@
 class Api::V1::TransactionsController < Api::V1::BaseController
 
   def index
-    @transactions = current_user.transactions
+    @transactions = current_user.transactions.paginate(params["page"])
     @categories = current_user.categories
   end
 

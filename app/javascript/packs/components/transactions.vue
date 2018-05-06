@@ -13,34 +13,44 @@
         </thead>
         <tbody>
           <Transaction
-            v-for="transaction in transaction_data.transactions"
+            v-for="transaction in transactionData.transactions"
             v-bind="transaction"
-            :categories="transaction_data.categories"
+            :categories="transactionData.categories"
             v-on:update-transaction="updateTransaction(transaction, $event)"
              />
         </tbody>
       </table>
+
+      <paginate
+        :page-count="transactionData.page_count"
+        :click-handler="fetchData"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :container-class="'pagination'">
+      </paginate>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
   import Transaction from '@components/transaction';
+  import Paginate from 'vuejs-paginate'
+
 
   export default {
     name: "transactions",
     components: {
       Transaction,
+      Paginate
     },
     data: function () {
       return {
-        transaction_data: {}
+        transactionData: {}
       }
     },
 
     created: function(){
-      this.fetchData()
+      this.fetchData(1)
     },
 
     methods: {
@@ -50,9 +60,11 @@
         })
       },
 
-      fetchData: function(){
-        this.$http.get('transactions').then(function(response){
-          this.transaction_data = response.body
+      fetchData: function(page){
+        var request_params = { params: { page: page } }
+        this.$http.get('transactions', request_params).then(function(response){
+          this.transactionData = response.body
+          console.log(this.transactionData)
         }, function(error){
           console.log(error)
         })

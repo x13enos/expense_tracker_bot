@@ -6,7 +6,8 @@ json.transactions    @transactions do |transaction|
   json.category_name transaction.category.name
   json.isExpense     transaction.category.expense?
 end
-json.categories    @categories do |category|
+json.categories      @categories do |category|
   json.id            category.id
   json.name          category.name
 end
+json.page_count      @transactions.page_count

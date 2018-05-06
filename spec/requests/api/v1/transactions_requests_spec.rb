@@ -25,11 +25,12 @@ RSpec.describe "transactions requests", type: :request do
             id: expence_category.id,
             name: expence_category.name
           }
-        ]
+        ],
+        page_count: 1
       }.to_json
 
 
-      get "#{base_url}/transactions", params: { format: :json }, headers: auth_headers
+      get "#{base_url}/transactions", params: { format: :json, page: 1 }, headers: auth_headers
       expect(response.body).to eq(data)
     end
   end
