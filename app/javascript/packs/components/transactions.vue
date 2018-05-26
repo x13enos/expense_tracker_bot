@@ -64,7 +64,6 @@
         var request_params = { params: { page: page } }
         this.$http.get('transactions', request_params).then(function(response){
           this.transactionData = response.body
-          console.log(this.transactionData)
         }, function(error){
           console.log(error)
         })
