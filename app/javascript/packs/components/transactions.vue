@@ -15,6 +15,7 @@
           <Transaction
             v-for="transaction in transactionData.transactions"
             v-bind="transaction"
+            v-bind:key="transaction.id"
             :categories="transactionData.categories"
             v-on:update-transaction="updateTransaction(transaction, $event)"
              />
