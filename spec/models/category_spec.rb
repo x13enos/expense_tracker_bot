@@ -41,4 +41,18 @@ RSpec.describe Category, type: :model do
       end
     end
   end
+
+  context "#expense?" do
+    let(:income_category) { create(:category, :income)  }
+    let(:expense_category) { create(:category, :expense)  }
+
+    it 'should return true if category has expense financial type' do
+      expect(expense_category.expense?).to be_truthy
+    end
+
+    it "should return false if category doesn't have expense financial type" do
+      expect(income_category.expense?).to be_falsey
+    end
+  end
+
 end

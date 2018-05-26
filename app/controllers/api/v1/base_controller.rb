@@ -26,8 +26,24 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def token
+    @token ||= if token_in_cookies?
+                 token_from_cookies
+               else
+                 token_from_headers
+               end
+  end
+
+  def token_in_cookies?
+    cookies[:token].present?
+  end
+
+  def token_from_cookies
+    cookies.delete(:token)
+  end
+
+  def token_from_headers
     return false unless request.env['HTTP_AUTHORIZATION']
-    request.env['HTTP_AUTHORIZATION'].scan(/Bearer (.*)$/).flatten
+    request.env['HTTP_AUTHORIZATION']
   end
 
   def authentication_error
@@ -44,9 +60,13 @@ class Api::V1::BaseController < ApplicationController
 
   def decoded_token
     @decoded_token ||= begin
-                        AuthService.decode(token.last)
+                        AuthService.decode(parse_token)
                       rescue JWT::ExpiredSignature
                         false
                       end
+  end
+
+  def parse_token
+    token.scan(/Bearer (.*)$/).flatten.last
   end
 end
