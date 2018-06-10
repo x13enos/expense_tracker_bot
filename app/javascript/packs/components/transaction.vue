@@ -45,10 +45,8 @@
 
       updateTransaction: function(){
         this.isChanging = false;
-        var formData = new FormData();
-        formData.append('amount', this.currentAmount)
-        formData.append('category_id', this.currentCategoryId)
-        this.$http.put('transactions/'+this.id, formData).then(function(response){
+        var request_params = { amount: this.currentAmount, category_id: this.currentCategoryId };
+        this.$http.put('transactions/'+this.id, request_params).then(function(response){
           this.$emit("update-transaction", response.body)
         }, function(error){
           console.log(error)

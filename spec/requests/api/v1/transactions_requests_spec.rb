@@ -35,6 +35,28 @@ RSpec.describe "transactions requests", type: :request do
     end
   end
 
+  describe "create" do
+    let(:category) { create(:category, :expense) }
+
+    it "should create transaction" do
+      post "#{base_url}/transactions", params: { transaction: { amount: "120", category_id: category.id }, format: :json }, headers: auth_headers
+      expect(Transaction.count).to eq(1)
+    end
+
+    it "should return new transaction" do
+      post "#{base_url}/transactions", params: { transaction: { amount: "120", category_id: category.id }, format: :json }, headers: auth_headers
+      data = {
+        id: Transaction.last.id,
+        amount: 120.0,
+        date: Transaction.last.created_at.strftime("%d %B %Y - %T"),
+        category_id: category.id,
+        category_name: category.name,
+        isExpense: true
+      }.to_json
+      expect(response.body).to eq(data)
+    end
+  end
+
   describe "update" do
     it "should return transactions" do
       category = create(:category, :expense, user: user)
@@ -49,7 +71,7 @@ RSpec.describe "transactions requests", type: :request do
       }.to_json
 
 
-      put "#{base_url}/transactions/#{transaction.id}", params: { amount: "120", format: :json }, headers: auth_headers
+      put "#{base_url}/transactions/#{transaction.id}", params: { transaction: { amount: "120" }, format: :json }, headers: auth_headers
       expect(response.body).to eq(data)
     end
   end

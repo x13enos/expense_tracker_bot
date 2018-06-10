@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :dashboard, only: :index
-      resources :transactions, only: [:index, :update]
+      resources :transactions, only: [:index, :create, :update]
     end
   end
 
   root to: 'dashboard#index'
   get "authorize", to: "sessions#index"
-  telegram_webhooks TelegramController
+  telegram_webhook TelegramController
 end
