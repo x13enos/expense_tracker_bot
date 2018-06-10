@@ -51,7 +51,7 @@ describe('transaction.vue', () => {
     })
   })
 
-  describe("show inputs after clisk on button edit", () => {
+  describe("show inputs after click on button edit", () => {
     let wrapper, checkingCells;
 
     before(() => {
@@ -143,10 +143,7 @@ describe('transaction.vue', () => {
         var spy = sinon.spy(localVue.http, "put");
         var wrapper = shallow(transaction, { propsData: componentPropsData, localVue });
         wrapper.vm.updateTransaction();
-        var formData = new FormData();
-        formData.append('amount', "-100")
-        formData.append('category_id', 1)
-        expect(spy.withArgs('transactions/1', formData).calledOnce).to.be.true
+        expect(spy.withArgs('transactions/1', { amount: "-100", category_id: 1}).calledOnce).to.be.true
         spy.restore()
       });
 

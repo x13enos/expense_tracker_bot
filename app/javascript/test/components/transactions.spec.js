@@ -36,6 +36,13 @@ describe('transactions.vue', () => {
       localVue.http.get.restore()
     })
 
+    it('should assign passed page to the params', () => {
+      sinon.stub(localVue.http, "get").resolves({ body: {} });
+      var wrapper = shallow(transactions, { localVue });
+      expect(wrapper.vm.currentPage).to.eq(1)
+      localVue.http.get.restore()
+    })
+
     it('should update transactionData after getting transactions info', (done) => {
       var wrapper = shallow(transactions, { localVue });
 
@@ -49,15 +56,39 @@ describe('transactions.vue', () => {
     })
   })
 
+  describe("addTransaction method", () => {
+    let fetchDataSpy;
+    let wrapper;
+
+    before(() => {
+      sinon.stub(transactions.methods, "fetchData");
+      wrapper = shallow(transactions);
+      fetchDataSpy = sinon.spy(wrapper.vm, "fetchData");
+      wrapper.vm.currentPage = 2;
+      wrapper.vm.formActive = true;
+      wrapper.vm.addTransaction();
+      transactions.methods.fetchData.restore();
+    });
+
+    it('should call fetchDate with current page number', () => {
+      expect(fetchDataSpy.withArgs(2).calledOnce).to.be.true
+    });
+
+    it('should assign false value to formActive param', () => {
+      expect(wrapper.vm.formActive).to.be.false
+    });
+  })
+
   describe("updateTransaction method", () => {
     let transaction;
 
     before(() => {
       sinon.stub(transactions.methods, "fetchData")
       transaction = { "amount": 1, 'category_id': 1, "category_name": 'first', "isExpense": true }
-      var new_data =    { "amount": 2, 'category_id': 2, "category_name": 'second', "isExpense": false }
+      var new_data = { "amount": 2, 'category_id': 2, "category_name": 'second', "isExpense": false }
       var wrapper = shallow(transactions);
       wrapper.vm.updateTransaction(transaction, new_data)
+      transactions.methods.fetchData.restore();
     });
 
     it('should update amount', () => {

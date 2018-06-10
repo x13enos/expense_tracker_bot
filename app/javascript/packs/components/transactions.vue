@@ -1,7 +1,20 @@
 <template>
   <div class='row'>
     <div class="col-lg-12">
-      <h2 class="page-header">Transactions</h2>
+      <div class='row' >
+        <div class="col-lg-4"><h2>Transactions</h2></div>
+        <div class='col-lg-8'>
+          <button class='btn btn-success btn-add-transaction' @click="formActive = true" v-show="!formActive">
+            Add transaction
+          </button>
+        </div>
+      </div>
+      <TransactionForm
+      v-show="formActive"
+      v-on:cancel-creation="formActive = false"
+      v-on:add-transaction="addTransaction()"
+      :categories="transactionData.categories" />
+      <hr>
       <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -34,6 +47,7 @@
 </template>
 
 <script>
+  import TransactionForm from '@components/transactions/form'
   import Transaction from '@components/transaction';
   import Paginate from 'vuejs-paginate'
 
@@ -42,29 +56,39 @@
     name: "transactions",
     components: {
       Transaction,
+      TransactionForm,
       Paginate
     },
     data: function () {
       return {
-        transactionData: {}
+        transactionData: {},
+        formActive: false,
+        currentPage: 1
       }
     },
 
     created: function(){
-      this.fetchData(1)
+      this.fetchData(this.currentPage)
     },
 
     methods: {
+      addTransaction: function(){
+        this.formActive = false;
+        this.fetchData(this.currentPage)
+      },
+
       updateTransaction: function(transaction, new_data){
         ["amount", 'category_id', "category_name", "isExpense"].forEach((k) => {
-          transaction[k] = new_data[k]
+          transaction[k] = new_data[k];
         })
       },
 
       fetchData: function(page){
+        this.currentPage = page;
         var request_params = { params: { page: page } }
+        var that = this
         this.$http.get('transactions', request_params).then(function(response){
-          this.transactionData = response.body
+          that.transactionData = response.body;
         }, function(error){
           console.log(error)
         })
@@ -75,4 +99,8 @@
 
 
 <style scoped>
+  .btn-add-transaction{
+    margin-top: 30px;
+    float: right;
+  }
 </style>
