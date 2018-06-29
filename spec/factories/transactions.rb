@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :transaction do
     association :user, factory: :user
     association :category, factory: [:category, :income]

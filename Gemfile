@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder'
-gem 'telegram-bot'
+gem 'telegram-bot', '~> 0.13.0'
 gem 'dotenv-rails'
 gem 'simple_form'
 gem 'jwt'
@@ -41,7 +41,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'fuubar'
   gem 'rails-controller-testing'
