@@ -51,7 +51,6 @@ describe('transaction-form.vue', () => {
 
         this.requests[0].respond(200, { "Content-Type": "application/json" },
                            '{ "id": "12" }');
-
       });
     });
   });

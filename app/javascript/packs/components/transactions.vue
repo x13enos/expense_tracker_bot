@@ -1,7 +1,7 @@
 <template>
   <div class='row'>
     <div class="col-lg-12">
-      <div class='row' >
+      <div class='row'>
         <div class="col-lg-4"><h2>Transactions</h2></div>
         <div class='col-lg-8'>
           <button class='btn btn-success btn-add-transaction' @click="formActive = true" v-show="!formActive">
@@ -9,11 +9,15 @@
           </button>
         </div>
       </div>
+      <TransactionFilters
+        v-show="!formActive"
+        v-on:apply-filters="fetchData(currentPage, $event)"
+        :categories="transactionData.categories" />
       <TransactionForm
-      v-show="formActive"
-      v-on:cancel-creation="formActive = false"
-      v-on:add-transaction="addTransaction()"
-      :categories="transactionData.categories" />
+        v-show="formActive"
+        v-on:cancel-creation="formActive = false"
+        v-on:add-transaction="addTransaction()"
+        :categories="transactionData.categories" />
       <hr>
       <table class="table">
         <thead class="thead-dark">
@@ -48,15 +52,16 @@
 
 <script>
   import TransactionForm from '@components/transactions/form'
+  import TransactionFilters from '@components/transactions/filters'
   import Transaction from '@components/transaction';
   import Paginate from 'vuejs-paginate'
-
 
   export default {
     name: "transactions",
     components: {
       Transaction,
       TransactionForm,
+      TransactionFilters,
       Paginate
     },
     data: function () {
@@ -83,9 +88,9 @@
         })
       },
 
-      fetchData: function(page){
+      fetchData: function(page=this.currentPage, filters={}){
         this.currentPage = page;
-        var request_params = { params: { page: page } }
+        var request_params = { params: { page: page, search: filters} }
         var that = this
         this.$http.get('transactions', request_params).then(function(response){
           that.transactionData = response.body;
