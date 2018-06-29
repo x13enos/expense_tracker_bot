@@ -66,8 +66,9 @@
     },
     data: function () {
       return {
-        transactionData: {},
+        transactionData: {page_count: 1},
         formActive: false,
+        pageCount: 1,
         currentPage: 1
       }
     },

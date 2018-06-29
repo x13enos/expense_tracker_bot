@@ -37,7 +37,7 @@ describe('transactions.vue', () => {
     })
 
     it('should assign passed page to the params', () => {
-      sinon.stub(localVue.http, "get").resolves({ body: {} });
+      sinon.stub(localVue.http, "get").resolves({ body: { page_count: 1 } });
       var wrapper = shallow(transactions, { localVue });
       expect(wrapper.vm.currentPage).to.eq(1)
       localVue.http.get.restore()
@@ -52,7 +52,7 @@ describe('transactions.vue', () => {
       }, 0)
 
       this.requests[0].respond(200, { "Content-Type": "application/json" },
-                         '{ "id": "12" }');
+                         '{ "id": "12", "page_count": 1 }');
     })
   })
 
