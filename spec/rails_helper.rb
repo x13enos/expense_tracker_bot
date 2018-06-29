@@ -5,7 +5,7 @@ require 'rspec/rails'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'support/factory_girl'
+require 'support/factory_bot'
 require 'active_support/testing/time_helpers'
 require 'spec_helper'
 require 'telegram/bot/rspec/integration'
