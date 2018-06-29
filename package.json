@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "mocha-webpack --webpack-config config/webpack/test.js --recursive --require app/javascript/test/setup.js **/*.spec.js"
+    "test": "mocha-webpack --webpack-config config/webpack/test.js --recursive --require app/javascript/test/setup.js **/*.spec.js",
+    "silent-test": "mocha-webpack --webpack-config config/webpack/test.js -R mocha-silent-reporter --recursive --require app/javascript/test/setup.js **/*.spec.js"
   },
   "dependencies": {
     "@rails/webpacker": "3.4",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.14",
+    "mocha-silent-reporter": "^1.0.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "jsdom": "^11.8.0",
