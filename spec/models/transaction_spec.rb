@@ -31,4 +31,27 @@ RSpec.describe Transaction, type: :model do
       end
     end
   end
+
+  describe ".search" do
+    let!(:category) { create(:category) }
+    let!(:transaction1) { create(:transaction, category: category, created_at: Time.now - 3.days) }
+    let!(:transaction2) { create(:transaction, created_at: Time.now - 2.days) }
+    let!(:transaction3) { create(:transaction, created_at: Time.now - 4.days) }
+
+    it "should return only transaction connected to category" do
+      expect(Transaction.search({ category_id: category.id })).to eq([transaction1])
+    end
+
+    it "should return only transaction created after passed day" do
+      travel_to Time.now - (2.days + 2.hours)
+      expect(Transaction.search({ start_date: DateTime.now })).to eq([transaction2])
+      travel_back
+    end
+
+    it "should return only transaction created before passed day" do
+      travel_to Time.now - (4.days - 2.hours)
+      expect(Transaction.search({ end_date: DateTime.now })).to eq([transaction3])
+      travel_back
+    end
+  end
 end

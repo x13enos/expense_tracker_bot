@@ -1,8 +1,6 @@
 <template>
   <div>
-
     <form class="form-inline">
-
       <label>Amount:</label>
       <input v-model="amount" placeholder="amount" class='form-control'>
       <label>Category:</label>
@@ -12,7 +10,7 @@
         </option>
       </select>
       <button class='btn btn-primary' @click="createTransaction()">Save</button>
-      <button class='btn btn-default' @click="cancelCreation()">Cancel</button>
+      <button class='btn btn-default' @click="$emit('cancel-creation')">Cancel</button>
     </form>
   </div>
 </template>
@@ -27,10 +25,6 @@
       }
     },
     methods: {
-      cancelCreation: function(){
-        this.$emit('cancel-creation')
-      },
-
       createTransaction: function(){
         var request_params = { amount: this.amount, category_id: this.categoryId };
         this.$http.post('transactions', request_params).then(function(){

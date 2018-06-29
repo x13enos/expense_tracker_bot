@@ -1,7 +1,11 @@
 class Api::V1::TransactionsController < Api::V1::BaseController
 
   def index
-    @transactions = current_user.transactions.order(created_at: :desc).paginate(params["page"])
+    @transactions = current_user.
+                    transactions.
+                    search(params[:search]).
+                    order(created_at: :desc).
+                    paginate(params["page"])
     @categories = current_user.categories
   end
 
