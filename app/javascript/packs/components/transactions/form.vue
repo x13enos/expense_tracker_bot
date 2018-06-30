@@ -9,8 +9,8 @@
           {{ category.name }}
         </option>
       </select>
-      <button class='btn btn-primary' @click="createTransaction()">Save</button>
-      <button class='btn btn-default' @click="$emit('cancel-creation')">Cancel</button>
+      <button type='button' class='btn btn-primary' @click="createTransaction()">Save</button>
+      <button type='button' class='btn btn-default' @click="$emit('cancel-creation')">Cancel</button>
     </form>
   </div>
 </template>

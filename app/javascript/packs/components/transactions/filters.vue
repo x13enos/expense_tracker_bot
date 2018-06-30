@@ -10,8 +10,8 @@
         <datepicker v-model="dateStart" placeholder="Start date" :bootstrap-styling="true" wrapper-class="input-group"></datepicker>
         <datepicker v-model="dateEnd" placeholder="End date" :bootstrap-styling="true" wrapper-class="input-group"></datepicker>
         <div class="input-group">
-          <button class='btn btn-success' @click="$emit('apply-filters', selectFiltersData())">Search</button>
-          <button class='btn btn-default' @click="$emit('apply-filters', { categoryId: null })">Clear</button>
+          <button type='button' class='btn btn-success' @click="$emit('apply-filters', selectFiltersData())">Search</button>
+          <button type='button' class='btn btn-default' @click="$emit('apply-filters', { categoryId: null })">Clear</button>
         </div>
       </form>
     </div>
