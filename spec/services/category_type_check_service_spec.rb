@@ -8,9 +8,9 @@ RSpec.describe CategoryTypeCheckService do
       let(:financial_type) { Category::FINANCIAL_TYPES.sample }
       let(:service) { CategoryTypeCheckService.new([financial_type], {}) }
       let(:success_result) do
-        { :markup =>
-          { :text=>"success" },
-          :context_handler => :new_category_name
+        { markup:
+          { text: "success" },
+          context_handler: :new_category_name!
         }
       end
 
@@ -29,9 +29,9 @@ RSpec.describe CategoryTypeCheckService do
       let(:financial_type) { "WRONG_TYPE" }
       let(:service) { CategoryTypeCheckService.new([financial_type], {}) }
       let(:fail_result) do
-        { :markup =>
-          {:text=>"fail", :reply_markup=>{:keyboard=>["types"], :one_time_keyboard=>true}},
-          :context_handler=>:new_category_type
+        { markup:
+          { text: "fail", reply_markup: { keyboard: ["types"], one_time_keyboard: true}},
+          context_handler: :new_category_type!
         }
       end
 

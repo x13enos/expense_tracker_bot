@@ -1,4 +1,6 @@
-RSpec.describe TelegramController, :telegram_bot do
+require 'rails_helper'
+
+RSpec.describe TelegramController, telegram_bot: :rails do
   let(:user) { create(:user) }
   before do
     allow_any_instance_of(UserInitService).to receive(:perform) { user }
@@ -24,19 +26,19 @@ RSpec.describe TelegramController, :telegram_bot do
     end
   end
 
-  describe '#deletecategory' do
+  describe '#delete_category' do
     context "user passed the name of existing category" do
       let(:category) { create(:category,:income, user: user) }
       let(:category_name) { category.name }
 
       it 'should return text about confirm the removing category' do
         text = "Type in 'yes' if you really want to delete that category."
-        expect { dispatch_command :deletecategory, category_name }.to respond_with_message(text)
+        expect { dispatch_command :delete_category, category_name }.to respond_with_message(text)
       end
 
       context "user passed the word 'yes'" do
         before do
-          dispatch_command :deletecategory, category_name
+          dispatch_command :delete_category, category_name
         end
 
         it 'should delete category' do
@@ -51,7 +53,7 @@ RSpec.describe TelegramController, :telegram_bot do
 
       context "user didn't passed the word 'yes'" do
         before do
-          dispatch_command :deletecategory, category_name
+          dispatch_command :delete_category, category_name
         end
 
         it "shouldn't delete category" do
@@ -70,7 +72,7 @@ RSpec.describe TelegramController, :telegram_bot do
 
       it 'should return text about confirm the removing category' do
         text = "Unfortunately we didn't find the category with that name."
-        expect { dispatch_command :deletecategory, category_name }.to respond_with_message(text)
+        expect { dispatch_command :delete_category, category_name }.to respond_with_message(text)
       end
     end
   end

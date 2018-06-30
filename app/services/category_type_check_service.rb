@@ -20,7 +20,7 @@ class CategoryTypeCheckService
   def success_result
     {
       markup: { text: I18n.t("telegram.categories.new.fill_the_name")  },
-      context_handler: :new_category_name
+      context_handler: :new_category_name!
     }
   end
 
@@ -30,7 +30,7 @@ class CategoryTypeCheckService
         text: I18n.t("telegram.categories.new.wrong_type"),
         reply_markup: { keyboard: [I18n.t('telegram.categories.types')], one_time_keyboard: true }
       },
-      context_handler: :new_category_type
+      context_handler: :new_category_type!
     }
   end
 
