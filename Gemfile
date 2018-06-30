@@ -17,11 +17,13 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder'
-gem 'telegram-bot', '~> 0.13.0'
+gem 'telegram-bot', '~> 0.14.0'
 gem 'dotenv-rails'
 gem 'simple_form'
 gem 'jwt'
 gem 'webpacker', '~> 3.4'
+gem 'redis-rails'
+
 
 #UI
 gem 'bootstrap', '~> 4.0.0.beta3'
