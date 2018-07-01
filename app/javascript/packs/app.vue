@@ -52,3 +52,13 @@
     name: 'app',
   }
 </script>
+
+<style scoped>
+  .navbar-without-bottom-margin{
+    margin-bottom: 0px;
+  }
+
+  .nprogress-custom-parent{
+    overflow: inherit;
+  }
+</style>
