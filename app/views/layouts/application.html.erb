@@ -5,21 +5,12 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'app_vue' %>
-    <%= stylesheet_pack_tag 'app_vue' %>
+    <%= javascript_pack_tag 'main' %>
+    <%= stylesheet_pack_tag 'main' %>
 
   </head>
 
   <body>
-
-    <div id='app'>
-      <div id="progress_bar"></div>
-      <%= render 'shared/navigation' %>
-
-      <div id='page-wrapper'>
-        <%= yield %>
-      </div>
-    </div>
-
+    <div id='app'></div>
   </body>
 </html>

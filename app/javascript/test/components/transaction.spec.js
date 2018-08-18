@@ -130,13 +130,17 @@ describe('transaction.vue', () => {
 
       afterEach(() => { xhr.restore(); })
 
-      it('should set false status for active flag', () => {
-        sinon.spy(localVue.http, "put");
+      it('should set false status for active flag', (done) => {
         var wrapper = shallow(transaction, { propsData: componentPropsData, localVue });
         wrapper.vm.isChanging = true;
         wrapper.vm.updateTransaction();
-        expect(wrapper.vm.isChanging).to.be.false
-        localVue.http.put.restore()
+        setTimeout(() => {
+          expect(wrapper.vm.isChanging).to.be.false
+          done()
+        }, 0)
+
+        this.requests[0].respond(200, { "Content-Type": "application/json" },
+                           '{ "id": "12" }');
       });
 
       it('should make an put request', () => {

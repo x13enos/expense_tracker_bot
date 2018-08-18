@@ -5,7 +5,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 Vue.use(VueResource)
-NProgress.configure({ parent: '#progress_bar' });
 
 Vue.http.options.root = '/api/v1/';
 

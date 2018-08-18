@@ -16,6 +16,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     props: ["categories"],
     data: function () {
@@ -25,12 +27,16 @@
       }
     },
     methods: {
+      ...mapActions([
+        'updateMessage',
+      ]),
       createTransaction: function(){
         var request_params = { amount: this.amount, category_id: this.categoryId };
         this.$http.post('transactions', request_params).then(function(){
           this.$emit("add-transaction")
-        }, function(error){
-          console.log(error)
+        }, function(error_response){
+          var error_message = error_response.body.errors.join(', ');
+          this.updateMessage(error_message)
         })
       }
     }

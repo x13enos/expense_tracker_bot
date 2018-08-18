@@ -1,9 +1,12 @@
+import Vuex from 'vuex'
 import { createLocalVue, shallow } from '@vue/test-utils'
 import VueResource from 'vue-resource'
 import transactionForm from '@components/transactions/form'
 
+
 const localVue = createLocalVue()
 localVue.use(VueResource)
+localVue.use(Vuex)
 
 describe('transaction-form.vue', () => {
   const componentPropsData = {
@@ -21,13 +24,15 @@ describe('transaction-form.vue', () => {
     });
 
     describe("createTransaction", () => {
-      let xhr, requests, wrapper;
+      let xhr, requests, wrapper, actions, store;
 
       beforeEach(() => {
+        actions = { updateMessage: sinon.stub().callsFake(function fakeFn(el, los) { }) }
+        store = new Vuex.Store({ state: {}, actions })
         xhr = sinon.useFakeXMLHttpRequest();
         requests = this.requests = [];
         xhr.onCreate = (xhr) => { requests.push(xhr); }
-        wrapper = shallow(transactionForm, { propsData: componentPropsData, localVue });
+        wrapper = shallow(transactionForm, { store, propsData: componentPropsData, localVue });
       })
 
       afterEach(() => { xhr.restore(); })
@@ -51,6 +56,18 @@ describe('transaction-form.vue', () => {
 
         this.requests[0].respond(200, { "Content-Type": "application/json" },
                            '{ "id": "12" }');
+      });
+
+      it('call passed data to update flash message service', (done) => {
+        wrapper.vm.createTransaction();
+
+        setTimeout(() => {
+          expect(actions.updateMessage.calledOnce).to.be.true
+          done()
+        }, 0)
+
+        this.requests[0].respond(422, { "Content-Type": "application/json" },
+                           '{ "errors": ["Failed"] }');
       });
     });
   });

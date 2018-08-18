@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     name: "transaction",
     props: ['category_name', 'category_id', "isExpense", "date", "amount", "id", "categories"],
@@ -37,19 +39,22 @@
       }
     },
     methods: {
+      ...mapActions([
+        'updateMessage',
+      ]),
       returnValues: function(){
         this.isChanging = false;
         this.currentAmount = this.amount;
         this.currentCategoryId = this.category_id;
       },
-
       updateTransaction: function(){
-        this.isChanging = false;
         var request_params = { amount: this.currentAmount, category_id: this.currentCategoryId };
         this.$http.put('transactions/'+this.id, request_params).then(function(response){
+          this.isChanging = false;
           this.$emit("update-transaction", response.body)
-        }, function(error){
-          console.log(error)
+        }, function(error_response){
+          var error_message = error_response.body.errors.join(', ');
+          this.updateMessage(error_message)
         })
       }
     }
