@@ -41,15 +41,18 @@
 
 
     <div id='page-wrapper'>
-      <div id="notification"></div>
+      <Notifier />
       <div class="col-12"><router-view></router-view></div>
     </div>
   </div>
 </template>
 
 <script>
+  import Notifier from '@components/services/notifier'
+
   export default {
     name: 'app',
+    components: { Notifier }
   }
 </script>
 
