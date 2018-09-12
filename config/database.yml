@@ -13,3 +13,7 @@ development:
 test:
   <<: *default
   database: expensestrackerbot_test
+
+production:
+  <<: *default
+  database: expensestrackerbot_production
