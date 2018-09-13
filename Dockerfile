@@ -13,17 +13,23 @@ RUN apk update \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && apk del curl tar binutils
 
+ENV RAILS_ROOT /var/www/expenses_tracker_bot
+RUN mkdir -p $RAILS_ROOT
 
-RUN mkdir /myapp
-WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
+WORKDIR $RAILS_ROOT
+
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 
 RUN gem install bundler && bundle install
 
-COPY package.json /myapp/package.json
-COPY yarn.lock /myapp/yarn.lock
+COPY package.json package.json
+COPY yarn.lock yarn.lock
 RUN yarn install
-RUN npm rebuild node-sass --force
 
-COPY . /myapp
+COPY . .
+
+RUN bundle exec rake assets:precompile
+EXPOSE 3000
+
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

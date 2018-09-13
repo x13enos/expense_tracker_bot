@@ -1,70 +1,45 @@
 version: '3'
-volumes:
-  postgres_data: {}
 services:
-  app:
-    build:
-      context: .
-      dockerfile: ./docker/app/Dockerfile
-    depends_on:
-      - db
   db:
     image: postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./tmp/db:/var/lib/postgresql/data
   web:
-    build:
-      context: .
-      dockerfile: ./docker/web/Dockerfile
-    depends_on:
-      - app
+    image: x3enos/expenses_tracker_bot:test
+    tty: true
+    stdin_open: true
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/var/www/expenses_tracker_bot
     ports:
-      - 80:80
+      - "3000:3000"
+    depends_on:
+      - db
+      - polling_service
+      - webpacker
+  polling_service:
+    image: x3enos/expenses_tracker_bot:test
+    command: bundle exec rake telegram:bot:poller
+    volumes:
+      - .:/var/www/expenses_tracker_bot
+    depends_on:
+      - redis
+      - db
+  webpacker:
+    image: x3enos/expenses_tracker_bot:test
+    command: bin/webpack-dev-server
+    volumes:
+      - .:/var/www/expenses_tracker_bot
+    ports:
+      - '3035:3035'
+  redis:
+    image: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
 
-# version: '3'
-# services:
-#   db:
-#     image: postgres
-#     volumes:
-#       - ./tmp/db:/var/lib/postgresql/data
-#   web:
-#     build: .
-#     tty: true
-#     stdin_open: true
-#     command: bundle exec rails s -p 3000 -b '0.0.0.0'
-#     volumes:
-#       - .:/myapp
-#     ports:
-#       - "3000:3000"
-#     depends_on:
-#       - db
-#       - polling_service
-#       - webpacker
-#   polling_service:
-#     build: .
-#     image: expensestrackerbot_web:latest
-#     command: bundle exec rake telegram:bot:poller
-#     volumes:
-#       - .:/myapp
-#     depends_on:
-#       - redis
-#       - db
-#   webpacker:
-#     build: .
-#     image: expensestrackerbot_web:latest
-#     command: bin/webpack-dev-server
-#     volumes:
-#       - .:/myapp
-#     ports:
-#       - '3035:3035'
-#   redis:
-#     image: redis
-#     environment:
-#       - ALLOW_EMPTY_PASSWORD=yes
-#     ports:
-#       - '6379:6379'
-#     volumes:
-#       - redis-data:/data
-#
-# volumes:
-#   redis-data:
+volumes:
+  redis-data:

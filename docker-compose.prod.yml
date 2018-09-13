@@ -1,0 +1,21 @@
+version: '3'
+volumes:
+  postgres_data: {}
+services:
+  app:
+    image: x3enos/expenses_tracker_bot:test
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: production
+      RACK_ENV: production
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  web:
+    image: x3enos/expenses_tracker_bot_nginx:test
+    depends_on:
+      - app
+    ports:
+      - 80:80
