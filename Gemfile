@@ -24,8 +24,6 @@ gem 'simple_form'
 gem 'jwt'
 gem 'webpacker', '~> 3.4'
 gem 'redis-rails'
-gem 'therubyracer'
-gem 'execjs'
 
 #UI
 gem 'bootstrap', '~> 4.0.0.beta3'
@@ -49,6 +47,8 @@ group :test do
   gem 'faker'
   gem 'fuubar'
   gem 'rails-controller-testing'
+  gem 'therubyracer'
+  gem 'execjs'
 end
 
 group :production do
