@@ -24,7 +24,8 @@ gem 'simple_form'
 gem 'jwt'
 gem 'webpacker', '~> 3.4'
 gem 'redis-rails'
-
+gem 'therubyracer'
+gem 'execjs'
 
 #UI
 gem 'bootstrap', '~> 4.0.0.beta3'

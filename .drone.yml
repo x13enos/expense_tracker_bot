@@ -1,0 +1,15 @@
+pipeline:
+  test:
+    image: ruby:2.4.4
+    environment:
+      - RAILS_ENV=test
+    commands:
+      - cp config/database.drone.yml config/database.yml
+      - bundle install --path=gems --retry=5 --jobs=5
+      - bundle exec rspec spec
+services:
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=test
