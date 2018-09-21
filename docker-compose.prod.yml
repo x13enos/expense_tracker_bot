@@ -3,7 +3,7 @@ volumes:
   postgres_data: {}
 services:
   app:
-    image: x3enos/expenses_tracker_bot:test
+    image: x3enos/expenses_tracker_bot:dockerizing_app
     depends_on:
       - db
     environment:
