@@ -1,4 +1,4 @@
-FROM ruby:2.4-alpine
+FROM x3enos/expenses_tracker_bot:latest
 
 ENV PATH /root/.yarn/bin:$PATH
 
