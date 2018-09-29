@@ -15,6 +15,9 @@ pipeline:
     repo: x3enos/expenses_tracker_bot
     tags: ${DRONE_COMMIT_BRANCH}
     secrets: [ docker_username, docker_password ]
+
+
+
   ssh:
     image: appleboy/drone-ssh
     host: 151.236.216.234
@@ -31,6 +34,8 @@ pipeline:
       -e VIRTUAL_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
       -e RAILS_ENV=production
       -e RACK_ENV=production
+      -e LOGSTASH_HOST=logstash
+      -e ELASTICSEARCH_HOST=elasticsearch
       --name $BUILD_ID
       --network reverse-proxy
       --link db:postgres

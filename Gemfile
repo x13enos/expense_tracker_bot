@@ -28,6 +28,10 @@ gem 'redis-rails'
 gem 'bootstrap', '~> 4.0.0.beta3'
 gem "font-awesome-rails"
 
+gem 'lograge'
+gem 'logstash-event'
+gem 'logstash-logger'
+
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
