@@ -11,8 +11,10 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
     end
 
     it "should return assigns transactions" do
+      searcher = double
       transactions = double
-      allow(@current_user).to receive_message_chain(:transactions, :search, :order, :paginate) { transactions }
+      allow(TransactionsSearchQuery).to receive(:new) { searcher }
+      allow(searcher).to receive_message_chain(:all, :order, :paginate) { transactions }
       get :index, format: :json
       expect(assigns(:transactions)).to eq(transactions)
     end
