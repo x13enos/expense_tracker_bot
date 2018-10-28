@@ -1,0 +1,46 @@
+pipeline:
+  test:
+    image: x3enos/ruby-node-2-4-4
+    environment:
+      - RAILS_ENV=test
+    commands:
+      - cp docker/drone/drone.env .env
+      - bundle install --path=/tmp/bundler --retry=5 --jobs=5
+      - bundle exec rspec spec
+    volumes:
+     - /tmp/bundler:/tmp/bundler
+     - /root/drone_rsa:/root/ssh/drone_rsa
+  docker:
+    image: plugins/docker
+    repo: x3enos/expenses_tracker_bot
+    tags: ${DRONE_COMMIT_BRANCH}
+    secrets: [ docker_username, docker_password ]
+
+  ssh:
+    image: appleboy/drone-ssh
+    host: 151.236.216.234
+    username: dockeradmin
+    volumes:
+      - /root/drone_rsa:/root/ssh/drone_rsa
+    key_path: /root/ssh/drone_rsa/id_rsa
+    script: >
+      BUILD_ID=${DRONE_COMMIT_BRANCH} &&
+      docker ps | grep $BUILD_ID | awk '{print $1}' | xargs -r docker rm -f &&
+      docker run -d
+      -e LETSENCRYPT_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
+      -e LETSENCRYPT_EMAIL=x13enos@gmail.com
+      -e VIRTUAL_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
+      -e RAILS_ENV=production
+      -e RACK_ENV=production
+      --log-driver gelf
+      -–log-opt gelf-address=udp://localhost:12201
+      --name $BUILD_ID
+      --network reverse-proxy
+      --link db:postgres
+      "x3enos/expenses_tracker_bot:$BUILD_ID"
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=expensestrackerbot_test

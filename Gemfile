@@ -1,4 +1,5 @@
-ruby '2.4.0'
+
+ruby '2.4.4'
 
 source 'https://rubygems.org'
 
@@ -6,7 +7,6 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
 
 gem 'rails', '~> 5.2.0'
 gem 'pg', '~> 0.18'
@@ -24,10 +24,13 @@ gem 'jwt'
 gem 'webpacker', '~> 3.4'
 gem 'redis-rails'
 
-
 #UI
 gem 'bootstrap', '~> 4.0.0.beta3'
 gem "font-awesome-rails"
+
+gem 'lograge'
+gem 'logstash-event'
+gem 'logstash-logger'
 
 group :development, :test do
   gem 'byebug', platform: :mri
