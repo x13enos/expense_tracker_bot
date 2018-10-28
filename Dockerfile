@@ -1,9 +1,9 @@
-FROM x3enos/expenses_tracker_bot:latest
+FROM x3enos/expenses_tracker_bot:development
+#FROM ruby:2.4.4-alpine
 
 ENV PATH /root/.yarn/bin:$PATH
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh build-base nodejs tzdata postgresql-dev
+RUN apk add --no-cache bash git openssh build-base nodejs tzdata postgresql-dev
 
 RUN apk update \
   && apk add curl bash binutils tar gnupg \
@@ -18,18 +18,17 @@ RUN mkdir -p $RAILS_ROOT
 
 WORKDIR $RAILS_ROOT
 
-COPY Gemfile Gemfile
-COPY Gemfile.lock Gemfile.lock
+COPY Gemfile Gemfile.lock ./
 
 RUN gem install bundler && bundle install
 
-COPY package.json package.json
-COPY yarn.lock yarn.lock
-RUN yarn install
+COPY package.json yarn.lock ./
+RUN yarn install && yarn cache clean
 
 COPY . .
 
 RUN bundle exec rake assets:precompile
+
 EXPOSE 3000
 
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

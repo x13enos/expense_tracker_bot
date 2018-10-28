@@ -17,6 +17,8 @@ services:
       - db
       - polling_service
       - webpacker
+    env_file:
+      - .env.work
   polling_service:
     image: x3enos/expenses_tracker_bot:test
     command: bundle exec rake telegram:bot:poller
@@ -25,6 +27,8 @@ services:
     depends_on:
       - redis
       - db
+    env_file:
+      - .env.work
   webpacker:
     image: x3enos/expenses_tracker_bot:test
     command: bin/webpack-dev-server
