@@ -10,7 +10,7 @@ Vue.http.options.root = '/api/v1/';
 
 Vue.http.interceptors.push(function(request, next) {
   NProgress.start();
-  if (localStorage.getItem("auth_token") !== null) {
+  if ( localStorage.getItem("auth_token") !== "undefined") {
     var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     request.headers.set('AUTHORIZATION', 'Bearer ' + localStorage.getItem("auth_token"));
     request.headers.set('X-CSRF-Token', token);

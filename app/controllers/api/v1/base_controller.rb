@@ -61,7 +61,7 @@ class Api::V1::BaseController < ApplicationController
   def decoded_token
     @decoded_token ||= begin
                         AuthService.decode(parse_token)
-                      rescue JWT::ExpiredSignature
+                      rescue JWT::ExpiredSignature, JWT::DecodeError
                         false
                       end
   end

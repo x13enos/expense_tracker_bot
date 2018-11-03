@@ -16,6 +16,7 @@ pipeline:
     tags: ${DRONE_COMMIT_BRANCH}
     secrets: [ docker_username, docker_password ]
 
+
   ssh:
     image: appleboy/drone-ssh
     host: 151.236.216.234
@@ -26,12 +27,14 @@ pipeline:
     script: >
       BUILD_ID=${DRONE_COMMIT_BRANCH} &&
       docker ps | grep $BUILD_ID | awk '{print $1}' | xargs -r docker rm -f &&
+      docker pull "x3enos/expenses_tracker_bot:$BUILD_ID" &&
       docker run -d
       -e LETSENCRYPT_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
       -e LETSENCRYPT_EMAIL=x13enos@gmail.com
       -e VIRTUAL_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
       -e RAILS_ENV=production
       -e RACK_ENV=production
+      --env-file='.env'
       --name $BUILD_ID
       --network reverse-proxy
       --link db:postgres
