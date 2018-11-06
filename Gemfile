@@ -25,7 +25,7 @@ gem 'webpacker', '~> 3.4'
 gem 'redis-rails'
 
 #UI
-gem 'bootstrap', '~> 4.0.0.beta3'
+gem "bootstrap", ">= 4.1.2"
 gem "font-awesome-rails"
 
 gem 'lograge'

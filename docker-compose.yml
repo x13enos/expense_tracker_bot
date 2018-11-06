@@ -5,12 +5,13 @@ services:
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
   web:
-    image: x3enos/expenses_tracker_bot:test
+    image: x3enos/expenses_tracker_bot:development
     tty: true
     stdin_open: true
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
       - .:/var/www/expenses_tracker_bot
+      - bundle_cache:/bundle
     ports:
       - "3000:3000"
     depends_on:
@@ -19,23 +20,31 @@ services:
       - webpacker
     env_file:
       - .env.work
+    environment:
+      - BUNDLE_PATH=/bundle
   polling_service:
-    image: x3enos/expenses_tracker_bot:test
+    image: x3enos/expenses_tracker_bot:development
     command: bundle exec rake telegram:bot:poller
     volumes:
       - .:/var/www/expenses_tracker_bot
+      - bundle_cache:/bundle
     depends_on:
       - redis
       - db
+    environment:
+      - BUNDLE_PATH=/bundle
     env_file:
       - .env.work
   webpacker:
-    image: x3enos/expenses_tracker_bot:test
+    image: x3enos/expenses_tracker_bot:development
     command: bin/webpack-dev-server
     volumes:
       - .:/var/www/expenses_tracker_bot
+      - bundle_cache:/bundle
     ports:
       - '3035:3035'
+    environment:
+      - BUNDLE_PATH=/bundle
   redis:
     image: redis
     environment:
@@ -47,3 +56,4 @@ services:
 
 volumes:
   redis-data:
+  bundle_cache:
