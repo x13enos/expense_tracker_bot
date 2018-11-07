@@ -24,6 +24,7 @@ pipeline:
     volumes:
       - /root/drone_rsa:/root/ssh/drone_rsa
     key_path: /root/ssh/drone_rsa/id_rsa
+    command_timeout: 240
     script: >
       BUILD_ID=${DRONE_COMMIT_BRANCH} &&
       docker ps | grep $BUILD_ID | awk '{print $1}' | xargs -r docker rm -f &&
