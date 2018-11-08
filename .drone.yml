@@ -25,23 +25,8 @@ pipeline:
       - /root/drone_rsa:/root/ssh/drone_rsa
     key_path: /root/ssh/drone_rsa/id_rsa
     command_timeout: 300
-    script: >
-      docker ps -f "status=running" -f "name=master" | grep -E "weeks|days" | awk '{print $1}' | xargs --no-run-if-empty docker rm -f &&
-      docker images | grep "x3enos/expenses_tracker_bot" | awk '{print $3}' | xargs --no-run-if-empty docker rmi &&
-      BUILD_ID=${DRONE_COMMIT_BRANCH} &&
-      docker ps | grep $BUILD_ID | awk '{print $1}' | xargs -r docker rm -f &&
-      docker pull "x3enos/expenses_tracker_bot:$BUILD_ID" &&
-      docker run -d
-      -e LETSENCRYPT_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
-      -e LETSENCRYPT_EMAIL=x13enos@gmail.com
-      -e VIRTUAL_HOST=$BUILD_ID.expenses-tracker.andres-sild.com
-      -e RAILS_ENV=production
-      -e RACK_ENV=production
-      --env-file='.env'
-      --name $BUILD_ID
-      --network reverse-proxy
-      --link db:postgres
-      "x3enos/expenses_tracker_bot:$BUILD_ID"
+    script: BUILD_ID=${DRONE_COMMIT_BRANCH} ./stage_launch.sh
+    
 services:
   db:
     image: postgres
