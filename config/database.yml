@@ -16,4 +16,5 @@ test:
 
 production:
   <<: *default
+  host: ENV["DB_CONTAINER_NAME"]
   database: expensestrackerbot_production

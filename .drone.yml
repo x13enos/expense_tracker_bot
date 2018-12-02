@@ -10,12 +10,12 @@ pipeline:
     volumes:
      - /tmp/bundler:/tmp/bundler
      - /root/drone_rsa:/root/ssh/drone_rsa
+     
   docker:
     image: plugins/docker
     repo: x3enos/expenses_tracker_bot
     tags: ${DRONE_COMMIT_BRANCH}
     secrets: [ docker_username, docker_password ]
-
 
   ssh:
     image: appleboy/drone-ssh
@@ -26,7 +26,7 @@ pipeline:
     key_path: /root/ssh/drone_rsa/id_rsa
     command_timeout: 300
     script: BUILD_ID=${DRONE_COMMIT_BRANCH} ./stage_launch.sh
-    
+
 services:
   db:
     image: postgres
